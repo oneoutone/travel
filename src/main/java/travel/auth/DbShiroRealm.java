@@ -16,7 +16,7 @@ import java.util.List;
 public class DbShiroRealm extends AuthorizingRealm {
 
     //数据库存储的用户密码的加密salt，正式环境不能放在源代码里
-    private static final String encryptSalt = "gxypt#";
+    //private static final String encryptSalt = "gxypt#";
     private UserService userService;
 
     public DbShiroRealm(UserService userService) {
@@ -29,6 +29,8 @@ public class DbShiroRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
+        System.out.println("support1");
+        System.out.println(token instanceof UsernamePasswordToken);
         return token instanceof UsernamePasswordToken;
     }
     /**

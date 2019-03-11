@@ -15,6 +15,10 @@ public class User implements Serializable{
     private List<String> roles;
     private Date created;
     private Date modified;
+    private boolean email_warn;
+    private boolean wechat_warn;
+    private boolean message_warn;
+    private boolean specify_source;
 
     public long getId() {
         return id;
@@ -76,4 +80,39 @@ public class User implements Serializable{
         this.modified = modified;
     }
 
+    public boolean isEmail_warn() {
+        return email_warn;
+    }
+
+    public boolean isWechat_warn() {
+        return wechat_warn;
+    }
+
+    public boolean isMessage_warn() {
+        return message_warn;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setEmail_warn(boolean email_warn) {
+        this.email_warn = email_warn;
+    }
+
+    public void setWechat_warn(boolean wechat_warn) {
+        this.wechat_warn = wechat_warn;
+    }
+
+    public void setMessage_warn(boolean message_warn) {
+        this.message_warn = message_warn;
+    }
+
+    public boolean isSpecify_source() {
+        return specify_source;
+    }
+
+    public void setSpecify_source(boolean specify_source) {
+        this.specify_source = specify_source;
+    }
 }

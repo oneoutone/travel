@@ -18,6 +18,14 @@ public class JWTToken implements HostAuthenticationToken  {
         this.token = token;
         this.host = host;
     }
+    public JWTToken(long id,String token, String host, java.sql.Timestamp expire, long userId) {
+        this.id = id;
+        this.token = token;
+        this.host = host;
+        this.expire = expire;
+        this.userId = userId;
+    }
+
     public String getHost() {
         return host;
     }

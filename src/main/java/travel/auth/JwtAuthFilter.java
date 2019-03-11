@@ -3,6 +3,7 @@ package travel.auth;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
+import org.apache.ibatis.annotations.Update;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -50,6 +51,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        System.out.println("isAccessAllowed");
         if(this.isLoginRequest(request, response))
             return true;
         Boolean afterFiltered = (Boolean)(request.getAttribute("jwtShiroFilter.FILTERED"));
@@ -57,16 +59,14 @@ public class JwtAuthFilter extends AuthenticatingFilter {
             return true;
 
         boolean allowed = false;
-        try {
-            allowed = executeLogin(request, response);
-        } catch(IllegalStateException e){ //not found any token
-            log.error("Not found any token");
-        }catch (Exception e) {
-            log.error("Error occurs when login", e);
+        System.out.println("preLogin");
+        System.out.println(new Date());
+        String jwtToken = getAuthzHeader(request);
+        if(jwtToken == null){
+            return false;
         }
-        System.out.println("auth result");
-        System.out.println(allowed || super.isPermissive(mappedValue));
-        return allowed || super.isPermissive(mappedValue);
+        System.out.println(jwtToken);
+        return userService.validToken(jwtToken);
     }
 
     @Override
@@ -90,19 +90,6 @@ public class JwtAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletResponse httpResponse = WebUtils.toHttp(response);
-        String newToken = null;
-        if(token instanceof JWTToken){
-            JWTToken jwtToken = (JWTToken)token;
-            User user = (User) subject.getPrincipal();
-            boolean shouldRefresh = shouldTokenRefresh(JwtUtils.getIssuedAt(jwtToken.getToken()));
-            if(shouldRefresh) {
-                newToken = userService.generateJwtToken(user.getUsername());
-            }
-        }
-        if(StringUtils.isNotBlank(newToken))
-            httpResponse.setHeader("x-auth-token", newToken);
-
         return true;
     }
 
@@ -114,7 +101,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
 
     protected String getAuthzHeader(ServletRequest request) {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        String header = httpRequest.getHeader("x-auth-token");
+        String header = httpRequest.getHeader("Authorization");
         return StringUtils.removeStart(header, "Bearer ");
     }
 

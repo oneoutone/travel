@@ -97,6 +97,7 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         chainDefinition.addPathDefinition("/api/users/register", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
         chainDefinition.addPathDefinition("/api/users/login", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/authCode/send", "noSessionCreation,anon");
         chainDefinition.addPathDefinition("/image/**", "anon");
         chainDefinition.addPathDefinition("/admin/**", "noSessionCreation,authcToken,anyRole[admin,manager]"); //只允许admin或manager角色的用户访问
         chainDefinition.addPathDefinition("/api/**", "noSessionCreation,authcToken");

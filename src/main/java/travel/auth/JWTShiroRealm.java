@@ -1,9 +1,6 @@
 package travel.auth;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -24,6 +21,8 @@ public class JWTShiroRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
+        System.out.println("support1");
+        System.out.println(token instanceof JWTToken);
         return token instanceof JWTToken;
     }
 
@@ -36,17 +35,20 @@ public class JWTShiroRealm extends AuthorizingRealm {
         JWTToken jwtToken = (JWTToken) authcToken;
         String token = jwtToken.getToken();
         System.out.println(token);
+        System.out.println(JwtUtils.getUsername(token));
         User user = userService.getJwtTokenInfo(JwtUtils.getUsername(token));
+        System.out.println("check");
         if(user == null)
             throw new AuthenticationException("token过期，请重新登录");
 
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, "", "jwtRealm");
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, token, "jwtRealm");
 
         return authenticationInfo;
     }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("doGetAuthorizationInfo(PrincipalCollection principals)");
         return new SimpleAuthorizationInfo();
     }
 }

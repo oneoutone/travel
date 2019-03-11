@@ -4,10 +4,16 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import travel.entity.AuthCode;
+import travel.entity.JWTToken;
 import travel.entity.User;
+import travel.mapper.AuthCodeMapper;
+import travel.mapper.JWTTokenMapper;
 import travel.mapper.UserMapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,6 +21,9 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private JWTTokenMapper jwtTokenMapper;
 
     @Autowired
     private Environment env;
@@ -64,6 +73,19 @@ public class UserService {
         return u;
     }
 
+    public User getUserByHeader(HttpServletRequest r1){
+        String token = r1.getHeader("Authorization");
+        if(token == null){
+            return null;
+        }
+        JWTToken jwt = jwtTokenMapper.findByToken(token);
+        if(jwt == null){
+            return null;
+        }
+        User user = userMapper.findById(jwt.getUserId());
+        return user;
+    }
+
     /**
      * 获取用户角色列表，强烈建议从缓存中获取
      * @param userId
@@ -71,5 +93,14 @@ public class UserService {
      */
     public List<String> getUserRoles(Long userId){
         return Arrays.asList("admin");
+    }
+
+    public Boolean validToken(String token){
+        Date now = new Date();
+        int num = jwtTokenMapper.countByToken(token, now);
+        if(num > 0){
+            return true;
+        }
+        return false;
     }
 }

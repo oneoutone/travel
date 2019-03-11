@@ -7,10 +7,12 @@ public class Product {
     private String name;
     private String description;
     private String status; //
-    private int type; //1: 自营 2: 合作 3: 第三方
+    private String type; //1: 自营 2: 合作 3: 第三方
     private long userId;
+    private double price;
     private Date created;
     private Date modified;
+    private Boolean deleted;
 
     public long getId() {
         return id;
@@ -28,14 +30,20 @@ public class Product {
 
     public String getStatus() { return status; }
 
-    public void setType(int type) { this.type = type; }
+    public void setType(String type) { this.type = type; }
 
-    public int getType() { return type; }
+    public String getType() { return type; }
 
     public void setUserId(long userId) { this.userId = userId; }
 
     public long getUserId() {
         return userId;
+    }
+
+    public void setPrice(double price) { this.price = price; }
+
+    public double getPrice() {
+        return price;
     }
 
     public Date getCreated() {
@@ -54,5 +62,8 @@ public class Product {
         this.modified = modified;
     }
 
+    public Boolean getDeleted() { return deleted; }
+
+    public void getDeleted(Boolean deleted) { this.deleted = deleted; }
 
 }
