@@ -5,7 +5,8 @@ import java.util.Date;
 public class KeyWord {
     private long id;
     private String word;
-    private String status; //enable, disable
+    private int type;
+    private String status; //waiting, confirmed
     private long userId;
     private Date created;
     private Date modified;
@@ -44,5 +45,13 @@ public class KeyWord {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type){
+        this.type = type;
     }
 }

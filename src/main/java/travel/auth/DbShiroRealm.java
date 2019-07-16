@@ -11,6 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import travel.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DbShiroRealm extends AuthorizingRealm {
@@ -53,10 +54,13 @@ public class DbShiroRealm extends AuthorizingRealm {
         System.out.println("doGetAuthenticationInfo(PrincipalCollection principals)");
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         User user = (User) principals.getPrimaryPrincipal();
-        List<String> roles = user.getRoles();
+        String[] roles = user.getRoles().split(",");
+        List<String> rs = new ArrayList<>();
+        for(int i=0; i<roles.length; i++){
+            rs.add(roles[i]);
+        }
         if (roles != null)
-            simpleAuthorizationInfo.addRoles(roles);
-
+            simpleAuthorizationInfo.addRoles(rs);
         return simpleAuthorizationInfo;
     }
 }

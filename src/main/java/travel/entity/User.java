@@ -12,13 +12,21 @@ public class User implements Serializable{
     private String password;
     private String name;
     private String phone;
-    private List<String> roles;
+    private String roles;
     private Date created;
     private Date modified;
     private boolean email_warn;
     private boolean wechat_warn;
     private boolean message_warn;
+    private boolean app_warn;
     private boolean specify_source;
+    private boolean specify_warn_setting;
+    private String openId;
+    private String headerUrl;
+    private String warn_phones;
+    private String warn_emails;
+    private String type; //C: 个人, B： 公司
+    private long companyId;
 
     public long getId() {
         return id;
@@ -56,11 +64,11 @@ public class User implements Serializable{
         this.phone = phone;
     }
 
-    public List<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -114,5 +122,67 @@ public class User implements Serializable{
 
     public void setSpecify_source(boolean specify_source) {
         this.specify_source = specify_source;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public String getHeaderUrl() {
+        return headerUrl;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public void setHeaderUrl(String headerUrl) {
+        this.headerUrl = headerUrl;
+    }
+
+    public void setWarn_phones(String warn_phones) {
+        this.warn_phones = warn_phones;
+    }
+
+    public String getWarn_phones() {
+        return warn_phones;
+    }
+
+    public void setWarn_emails(String warn_emails) {
+        this.warn_emails = warn_emails;
+    }
+
+    public String getWarn_emails() { return warn_emails; }
+
+    public boolean isSpecify_warn_setting() {
+        return specify_warn_setting;
+    }
+
+    public void setSpecify_warn_setting(boolean specify_warn_setting) {
+        this.specify_warn_setting = specify_warn_setting;
+    }
+
+    public boolean isApp_warn() {
+        return app_warn;
+    }
+
+    public void setApp_warn(boolean app_warn) {
+        this.app_warn = app_warn;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public long getCompanyId() {
+        return companyId;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
     }
 }

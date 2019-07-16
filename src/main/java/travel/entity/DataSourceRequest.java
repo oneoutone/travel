@@ -2,15 +2,17 @@ package travel.entity;
 
 import java.util.Date;
 
-public class DataSource {
+public class DataSourceRequest {
+
     private long id;
     private long userId;
     private String sourceId;
     private String sourceName;
     private String sourceUrl;
-    private String type;
-    private String channel;
     private Date created;
+    private String status; //waiting, confirmed
+    private String type;
+    private String channel; //wechat, weibo, website
 
     public long getId() {
         return id;
@@ -54,6 +56,14 @@ public class DataSource {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getType() {

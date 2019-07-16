@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface KeyWordMapper {
-    @Insert("INSERT INTO key_word(word, status, userId, created, modified) VALUES(#{word}, #{status}, #{userId}, #{created}, #{modified})")
+    @Insert("INSERT INTO key_word(word, status, userId, created, modified, type) VALUES(#{word}, #{status}, #{userId}, #{created}, #{modified}, #{type})")
     int inserKeyWord(KeyWord keyWord);
 
     @Select("<script>SELECT count(*) FROM key_word WHERE userId = #{userId} <if test = 'word != \"\"'> AND word like #{word}</if></script>")
@@ -18,6 +18,9 @@ public interface KeyWordMapper {
 
     @Update("UPDATE key_word SET status = #{status}, modified = #{modified} WHERE id=#{id}")
     int updateStatusById(@Param("status") String status, @Param("modified") Date modified, @Param("id") long id);
+
+    @Update("UPDATE key_word SET status = #{status}, modified = #{modified} WHERE userId=#{userId}")
+    int updateStatusByUserId(@Param("status") String status, @Param("modified") Date modified, @Param("userId") long userId);
 
     @Update("UPDATE key_word SET status = #{status}, modified = #{modified} WHERE word=#{word} AND userId=#{userId}")
     int updateStatusByWordAndUserId(@Param("status") String status, @Param("modified") Date modified, @Param("word") String word, @Param("userId") long userId);
@@ -33,5 +36,11 @@ public interface KeyWordMapper {
 
     @Select("SELECT * FROM key_word WHERE userId=#{userId}")
     List<KeyWord> findAll(@Param("userId") long userId);
+
+    @Select("SELECT * FROM key_word WHERE userId=#{userId} AND status=#{status}")
+    List<KeyWord> findAllByStatus(@Param("userId") long userId, @Param("status") String status);
+
+    @Select("<script>SELECT * FROM key_word WHERE userId = #{userId} <if test = 'status != \"\"'> AND status = #{status}</if></script>")
+    List<KeyWord> findByUserAndStatus(@Param("userId") long userId, @Param("status") String status);
 
 }

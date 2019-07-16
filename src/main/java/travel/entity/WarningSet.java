@@ -8,6 +8,7 @@ public class WarningSet {
     private String sourceId;
     private String sourceName;
     private String sourceUrl;
+    private String type; //default, specify
     private int readNum;
     private int discussNum;
     private int shareNum;
@@ -78,5 +79,13 @@ public class WarningSet {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

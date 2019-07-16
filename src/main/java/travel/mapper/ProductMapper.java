@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import travel.entity.Product;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProductMapper {
@@ -15,5 +16,6 @@ public interface ProductMapper {
     List<Product> findAllProductByType(@Param("type") String type);
 
     @Select("SELECT * FROM product_book a, product b, WHERE a.userId = #{userId} AND b.id=a.productId")
-    List<ResultMap> findProductBookByUserId(@Param("userId") long userId);
+    List<HashMap> findProductBookByUserId(@Param("userId") long userId);
+
 }

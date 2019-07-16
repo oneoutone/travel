@@ -95,8 +95,22 @@ public class ShiroConfig {
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/api/yuqing/leader_data", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/yuqing/words", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/yuqing/history_data", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/yuqing/reportData", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/yuqing/analysis", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/yuqing/report", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
         chainDefinition.addPathDefinition("/api/users/register", "noSessionCreation,anon");  //register不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/adminLogin", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
         chainDefinition.addPathDefinition("/api/users/login", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/hello1", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/hello", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/resetPassword", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/wechatOpenId", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/wechatBind", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/wechatAuth", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/api/users/checkToken", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
         chainDefinition.addPathDefinition("/api/authCode/send", "noSessionCreation,anon");
         chainDefinition.addPathDefinition("/image/**", "anon");
         chainDefinition.addPathDefinition("/admin/**", "noSessionCreation,authcToken,anyRole[admin,manager]"); //只允许admin或manager角色的用户访问

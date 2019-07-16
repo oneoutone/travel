@@ -111,7 +111,438 @@ CREATE TABLE `data_source` (
   PRIMARY KEY (`id`)
 ) CHARSET=utf8;
 
+CREATE TABLE `wechat_token` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(255) default NULL,
+  `expire` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
 ALTER TABLE user ADD email_warn tinyint(1) DEFAULT NULL;
 ALTER TABLE user ADD wechat_warn tinyint(1) DEFAULT NULL;
 ALTER TABLE user ADD message_warn tinyint(1) DEFAULT NULL;
 ALTER TABLE user ADD specify_source tinyint(1) DEFAULT NULL;
+
+ALTER TABLE user ADD openId varchar(255) DEFAULT NULL;
+ALTER TABLE user ADD headerUrl varchar(255) DEFAULT NULL;
+
+
+CREATE TABLE `province` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `city` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `province_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `country` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `city_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `scenic_spot` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `level` varchar(255),
+  `country_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `enterprise` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL, //travel_agent, hotel, restaurant,other
+  `contact_people` varchar(255),
+  `contact_phone` varchar(255),
+  `address` varchar(255),
+  `country_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+insert into travel.province (name) values('广西');
+
+insert into travel.city (name, province_id) values('南宁', 1);
+insert into travel.city (name, province_id) values('柳州', 1);
+insert into travel.city (name, province_id) values('桂林', 1);
+insert into travel.city (name, province_id) values('梧州', 1);
+insert into travel.city (name, province_id) values('北海', 1);
+insert into travel.city (name, province_id) values('防城港', 1);
+insert into travel.city (name, province_id) values('钦州', 1);
+insert into travel.city (name, province_id) values('贵港', 1);
+insert into travel.city (name, province_id) values('玉林', 1);
+insert into travel.city (name, province_id) values('百色', 1);
+insert into travel.city (name, province_id) values('贺州', 1);
+insert into travel.city (name, province_id) values('河池', 1);
+insert into travel.city (name, province_id) values('来宾', 1);
+insert into travel.city (name, province_id) values('崇左', 1);
+
+insert into travel.country (name, city_id) values('兴宁区', 1);
+insert into travel.country (name, city_id) values('江南区', 1);
+insert into travel.country (name, city_id) values('青秀区', 1);
+insert into travel.country (name, city_id) values('西乡塘区', 1);
+insert into travel.country (name, city_id) values('邕宁区', 1);
+insert into travel.country (name, city_id) values('良庆区', 1);
+insert into travel.country (name, city_id) values('武鸣区', 1);
+insert into travel.country (name, city_id) values('横县', 1);
+insert into travel.country (name, city_id) values('宾阳县', 1);
+insert into travel.country (name, city_id) values('上林县', 1);
+insert into travel.country (name, city_id) values('马山县', 1);
+insert into travel.country (name, city_id) values('隆安县', 1);
+
+
+insert into travel.country (name, city_id) values('城中区', 2);
+insert into travel.country (name, city_id) values('鱼峰区', 2);
+insert into travel.country (name, city_id) values('柳南区', 2);
+insert into travel.country (name, city_id) values('柳北区', 2);
+insert into travel.country (name, city_id) values('柳江区', 2);
+insert into travel.country (name, city_id) values('柳城县', 2);
+insert into travel.country (name, city_id) values('鹿寨区', 2);
+insert into travel.country (name, city_id) values('融安县', 2);
+insert into travel.country (name, city_id) values('融水苗族自治县', 2);
+insert into travel.country (name, city_id) values('三江侗族自治县', 2);
+
+insert into travel.country (name, city_id) values('秀峰区', 3);
+insert into travel.country (name, city_id) values('叠彩区', 3);
+insert into travel.country (name, city_id) values('七星区', 3);
+insert into travel.country (name, city_id) values('象山区', 3);
+insert into travel.country (name, city_id) values('雁山区', 3);
+insert into travel.country (name, city_id) values('临桂区', 3);
+insert into travel.country (name, city_id) values('灵川县', 3);
+insert into travel.country (name, city_id) values('兴安县', 3);
+insert into travel.country (name, city_id) values('全州县', 3);
+insert into travel.country (name, city_id) values('灌阳县', 3);
+insert into travel.country (name, city_id) values('资源县', 3);
+insert into travel.country (name, city_id) values('永福县', 3);
+insert into travel.country (name, city_id) values('阳朔县', 3);
+insert into travel.country (name, city_id) values('荔浦县', 3);
+insert into travel.country (name, city_id) values('平乐县', 3);
+insert into travel.country (name, city_id) values('龙胜各族自治县', 3);
+insert into travel.country (name, city_id) values('恭城瑶族自治县', 3);
+
+insert into travel.country (name, city_id) values('藤县', 4);
+insert into travel.country (name, city_id) values('苍梧县', 4);
+insert into travel.country (name, city_id) values('岑溪市', 4);
+insert into travel.country (name, city_id) values('蒙山县', 4);
+insert into travel.country (name, city_id) values('龙圩区', 4);
+insert into travel.country (name, city_id) values('万秀区', 4);
+insert into travel.country (name, city_id) values('长洲区', 4);
+
+insert into travel.country (name, city_id) values('海城区', 5);
+insert into travel.country (name, city_id) values('银海区', 5);
+insert into travel.country (name, city_id) values('铁山港区', 5);
+insert into travel.country (name, city_id) values('合浦县', 5);
+
+insert into travel.country (name, city_id) values('港口区', 6);
+insert into travel.country (name, city_id) values('防城区', 6);
+insert into travel.country (name, city_id) values('东兴市', 6);
+insert into travel.country (name, city_id) values('上思县', 6);
+
+insert into travel.country (name, city_id) values('钦南区', 7);
+insert into travel.country (name, city_id) values('钦北区', 7);
+insert into travel.country (name, city_id) values('灵山县', 7);
+insert into travel.country (name, city_id) values('浦北县', 7);
+
+insert into travel.country (name, city_id) values('港北区', 8);
+insert into travel.country (name, city_id) values('港南区', 8);
+insert into travel.country (name, city_id) values('覃塘区', 8);
+insert into travel.country (name, city_id) values('平南县', 8);
+insert into travel.country (name, city_id) values('桂平市', 8);
+
+insert into travel.country (name, city_id) values('玉州区', 9);
+insert into travel.country (name, city_id) values('福绵区', 9);
+insert into travel.country (name, city_id) values('北流市', 9);
+insert into travel.country (name, city_id) values('容县', 9);
+insert into travel.country (name, city_id) values('陆川县', 9);
+insert into travel.country (name, city_id) values('博白县', 9);
+insert into travel.country (name, city_id) values('兴业县', 9);
+insert into travel.country (name, city_id) values('玉东新区', 9);
+
+insert into travel.country (name, city_id) values('右江区', 10);
+insert into travel.country (name, city_id) values('靖西市', 10);
+insert into travel.country (name, city_id) values('田阳县', 10);
+insert into travel.country (name, city_id) values('田东县', 10);
+insert into travel.country (name, city_id) values('平果县', 10);
+insert into travel.country (name, city_id) values('德保县', 10);
+insert into travel.country (name, city_id) values('那坡县', 10);
+insert into travel.country (name, city_id) values('凌云县', 10);
+insert into travel.country (name, city_id) values('乐业县', 10);
+insert into travel.country (name, city_id) values('田林县', 10);
+insert into travel.country (name, city_id) values('隆林县', 10);
+insert into travel.country (name, city_id) values('西林县', 10);
+
+insert into travel.country (name, city_id) values('八步区', 11);
+insert into travel.country (name, city_id) values('平桂区', 11);
+insert into travel.country (name, city_id) values('昭平县', 11);
+insert into travel.country (name, city_id) values('钟山县', 11);
+insert into travel.country (name, city_id) values('富川瑶族自治县', 11);
+
+insert into travel.country (name, city_id) values('宜州区', 12);
+insert into travel.country (name, city_id) values('金城江区', 12);
+insert into travel.country (name, city_id) values('南丹县', 12);
+insert into travel.country (name, city_id) values('天峨县', 12);
+insert into travel.country (name, city_id) values('凤山县', 12);
+insert into travel.country (name, city_id) values('东兰县', 12);
+insert into travel.country (name, city_id) values('巴马瑶族自治县', 12);
+insert into travel.country (name, city_id) values('都安瑶族自治县', 12);
+insert into travel.country (name, city_id) values('大化瑶族自治县', 12);
+insert into travel.country (name, city_id) values('罗城仫佬族自治县', 12);
+insert into travel.country (name, city_id) values('环江毛南族自治县', 12);
+
+insert into travel.country (name, city_id) values('兴宾区', 13);
+insert into travel.country (name, city_id) values('忻城县', 13);
+insert into travel.country (name, city_id) values('象州县', 13);
+insert into travel.country (name, city_id) values('武宣县', 13);
+insert into travel.country (name, city_id) values('金秀瑶族自治县', 13);
+insert into travel.country (name, city_id) values('合山市', 13);
+
+
+insert into travel.country (name, city_id) values('凭祥市', 14);
+insert into travel.country (name, city_id) values('扶绥县', 14);
+insert into travel.country (name, city_id) values('宁明县', 14);
+insert into travel.country (name, city_id) values('大新县', 14);
+insert into travel.country (name, city_id) values('天等县', 14);
+insert into travel.country (name, city_id) values('龙州县', 14);
+insert into travel.country (name, city_id) values('江州区', 14);
+
+
+
+ALTER TABLE user ADD roles varchar(255) DEFAULT NULL;
+
+ALTER TABLE key_word ADD type int DEFAULT NULL;
+
+ALTER TABLE user ADD specify_warn_setting tinyint(1) DEFAULT 0;
+
+ALTER TABLE data_source ADD type varchar(255) DEFAULT NULL;
+
+ALTER TABLE data_source ADD channel varchar(255) DEFAULT NULL;
+
+
+CREATE TABLE data_source_request(
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL,
+  `sourceId` varchar(255) default NULL,
+  `sourceName` varchar(255) default NULL,
+  `sourceUrl` varchar(255) default NULL,
+  `type` varchar(255) default NULL,
+    `status` varchar(255) default NULL,
+   `channel` varchar(255) default NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+ALTER TABLE user ADD app_warn tinyint(1) DEFAULT 0;
+
+ALTER TABLE user ADD warn_emails varchar(255) DEFAULT NULL;
+
+ALTER TABLE user ADD warn_phones varchar(255) DEFAULT NULL;
+
+CREATE TABLE batch(
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) default NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `finished` datetime DEFAULT NULL,
+   `count` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE article(
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `articleId` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `publish_time` datetime DEFAULT NULL,
+  `source_name` varchar(255) default NULL,
+  `postive` double default NULL,
+  `type` varchar(255) default NULL,
+  `status` varchar(255) default NULL,
+  `userId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+ALTER TABLE warning_set ADD type varchar(255) DEFAULT NULL;
+
+CREATE TABLE report(
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) default NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  `url` varchar(255) default NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+
+CREATE TABLE data(
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `articleId` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `content` blob default NULL,
+  `publish_time` datetime DEFAULT NULL,
+  `source_name` varchar(255) default NULL,
+  `postive` double default NULL,
+  `type` varchar(255) default NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+
+ALTER TABLE travel.data_source ADD urls varchar(255) DEFAULT NULL;
+ALTER TABLE travel.data_source ADD words varchar(255) DEFAULT NULL;
+
+
+ALTER TABLE user ADD companyId bigint(20) default NULL;
+
+CREATE TABLE `company` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `regNo` varchar(255) DEFAULT NULL,
+  `acNo` varchar(255) DEFAULT NULL,
+  `bank` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `contactPeople` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `managerId` bigint(20) NOT NULL,
+  `adminId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+
+CREATE TABLE `advice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `managerId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `follow` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `articleId` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `publish_time` varchar(255) DEFAULT NULL,
+  `source_name` varchar(255) DEFAULT NULL,
+  `postive` double default NULL,
+  `userId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+
+ALTER TABLE company ADD location varchar(255) DEFAULT NULL;
+
+CREATE TABLE `bidsInfo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `regNo` varchar(255) DEFAULT NULL,
+  `acNo` varchar(255) DEFAULT NULL,
+  `bank` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `contactPeople` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `productName` varchar(255) DEFAULT NULL,
+  `industry` varchar(255) DEFAULT NULL,
+  `keyWords` varchar(255) DEFAULT NULL,
+  `productAdvantage` varchar(255) DEFAULT NULL,
+  `processAdvantage` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `supplier` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `buyer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `distributor` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `purchase` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `detail` longtext DEFAULT NULL,
+  `industry` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `price` double(16,2) DEFAULT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `purchase_apply` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `purchaseId` bigint(20) NOT NULL,
+  `bidInfoId` bigint(20) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+
+CREATE TABLE `event` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `industry` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `publish_time` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `eventArticle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `source_name` varchar(255) DEFAULT NULL,
+  `articleId` varchar(255) DEFAULT NULL,
+  `publish_time` datetime DEFAULT NULL,
+  `postive` double(16,2) DEFAULT NULL,
+  `eventId` bigint(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+
+CREATE TABLE `notification` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `artcleId` varchar(255) DEFAULT NULL,
+  `userId` bigint(20) NOT NULL,
+  `taskId` bigint(20) NOT NULL
+  PRIMARY KEY (`id`)
+) CHARSET=utf8;
+

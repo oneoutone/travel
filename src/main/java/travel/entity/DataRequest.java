@@ -21,6 +21,8 @@ public class DataRequest {
     private Date created;
     private String status;
     private double price;
+    private String words;
+    private String urls;
 
     public long getId() {
         return id;
@@ -159,5 +161,21 @@ public class DataRequest {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getWords() {
+        return words;
+    }
+
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setWords(String words) {
+        this.words = words;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
     }
 }
